@@ -8,6 +8,7 @@ from math import log10
 from random import randint
 
 class QuadgramStatistics:
+    
     # can't take the log of 0 so 'ZERO' is my 0 value when calculating fitness of quadgrams with frequency of zero
     ZERO =  0.00000000000001
     def __init__(self, dataFilePath):

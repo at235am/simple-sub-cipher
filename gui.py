@@ -3,22 +3,30 @@ import time
 from random import randint
 from tkinter import *
 from tkinter import scrolledtext
+from QuadgramStatistics import QuadgramStatistics as QS
+import FitnessScorer as FS
 
+DEFAULT_DATA_FILE_PATH = "quadgrams-data.txt"
 class GUI():
     TEXT_FIELD_INPUT_FONT = ("TkFixedFont")
     ROOT_WINDOW_WIDTH = 595
     ROOT_WINDOW_HEIGHT = 400
     ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-    def __init__(self, FS):
-        self.FS = FS
+    def __init__(self):
+        self.qs = QS(DEFAULT_DATA_FILE_PATH)
+        self.num_processes = 100
+
+        def btn_init_data():
+            print("nothing")
+
         def generateRandomKeyBtn():
             textinput.delete("1.0", END)
             res = "HAVENT DONE YET"
             textinput.insert(INSERT, res)
 
         def encryptbtn():
-
-            inputText = GUI.lowerAlphaOnly(textinput.get("1.0", END).strip("\n"))
+            
+            inputText = FS.lowerAlphaOnly(textinput.get("1.0", END).strip("\n"))
             inputKey = keyinput.get()
 
             if(inputText == ''):
@@ -28,12 +36,12 @@ class GUI():
 
             startTime = time.perf_counter()
             if(inputKey == ''):
-                inputKey = GUI.generateRandomKey(GUI.ALPHABET)
+                inputKey = FS.generateRandomKey(GUI.ALPHABET)
             
-            if(GUI.isValidKey(inputKey, GUI.ALPHABET)):
-                encryptionresult = self.FS.encrypt(GUI.ALPHABET, inputKey, inputText)
+            if(FS.isValidKey(inputKey, GUI.ALPHABET)):
+                encryptionresult = FS.encrypt(GUI.ALPHABET, inputKey, inputText)
             else:
-                encryptionresult = f"INVALID KEY!!!!!!\n\nThe key should be a string of 26 unique letters if using the english alphabet.\n\nExample:\n[{GUI.generateRandomKey(GUI.ALPHABET)}]"
+                encryptionresult = f"INVALID KEY!!!!!!\n\nThe key should be a string of 26 unique letters if using the english alphabet.\n\nExample:\n[{FS.generateRandomKey(GUI.ALPHABET)}]"
 
             # print(f"{FS.fitness("whatsinanamearosebyanyothernamewouldsmellassweet",)}")
             endTime = time.perf_counter()
@@ -49,10 +57,9 @@ class GUI():
             print()
 
         def decryptbtn():
-            inputText = GUI.lowerAlphaOnly(textinput.get("1.0", END).strip("\n"))
+            inputText = FS.lowerAlphaOnly(textinput.get("1.0", END).strip("\n"))
             inputKey = keyinput.get()
 
-           
             if(inputText == ''):
                 resulttext.delete("1.0", END)
                 resulttext.insert(INSERT, "NO TEXT SO NO RESULTS")
@@ -61,21 +68,16 @@ class GUI():
             startTime = time.perf_counter()
             result = ''
             if(inputKey == ''):
-                randomKeyArray = list()
-                # for i in range(_PROCESSES):
-                for i in range(100):
-                    randomKeyArray.append(GUI.generateRandomKey(GUI.ALPHABET))
-
-                results = self.FS.multiprocess_climb_hill(randomKeyArray, inputText)
-                absoluteMax = self.FS.determineAbsoluteMax(results)
+                results = FS.multiprocess_climb_hill(self.qs.QUADGRAM_FITNESS_MAP, GUI.ALPHABET, 4, self.qs.ZERO_FREQUENCY_FITNESS, inputText, self.num_processes)
+                absoluteMax = FS.determineAbsoluteMax(results, self.qs.ZERO_FREQUENCY_FITNESS, 4)
                 # since the FS object cuts down the original ciphertext to the first 120 characters
                 # we must decrypt an extra time using the orignal ciphertext:
-                result = absoluteMax[0], absoluteMax[1], self.FS.decrypt(GUI.ALPHABET, absoluteMax[0], inputText)
+                result = absoluteMax[0], absoluteMax[1], FS.decrypt(GUI.ALPHABET, absoluteMax[0], inputText)
             
-            elif(GUI.isValidKey(inputKey, GUI.ALPHABET)):
-                result = inputKey, inputText, self.FS.decrypt(GUI.ALPHABET, inputKey, inputText)
+            elif(FS.isValidKey(inputKey, GUI.ALPHABET)):
+                result = inputKey, inputText, FS.decrypt(GUI.ALPHABET, inputKey, inputText)
             else:
-                result = inputKey, inputText, f"INVALID KEY!!!!!!\n\nThe key should be a string of 26 unique letters if using the english alphabet.\n\nExample:\n[{GUI.generateRandomKey(GUI.ALPHABET)}]"
+                result = inputKey, inputText, f"INVALID KEY!!!!!!\n\nThe key should be a string of 26 unique letters if using the english alphabet.\n\nExample:\n[{FS.generateRandomKey(GUI.ALPHABET)}]"
             
             print(f"fitness: {result[1]}")
             endTime = time.perf_counter()
@@ -157,39 +159,7 @@ class GUI():
 
         self.root = root
 
-    @staticmethod
-    def lowerAlphaOnly(text):
-        alphaOnlyText = ''
-        for i in range(len(text)):
-            if text[i].isalpha():
-                alphaOnlyText += text[i]
-        return alphaOnlyText.lower()
-
-    # generates a random key given an alphabet
-    @staticmethod
-    def generateRandomKey(alphabet):
-        randomKey = ''
-        listOfLettersLeft = alphabet
-        for i in range(len(alphabet)):
-            index = randint(0, len(listOfLettersLeft)-1) # generate a random index from 0 to the length of the list of letters left; minus 1 is to make the max range exclusive to prevent out of bound errors
-            randomKey += listOfLettersLeft[index] # add letter onto random key string
-            listOfLettersLeft = listOfLettersLeft.replace(listOfLettersLeft[index], '') # remove the letter to avoid it being picked again
-        return randomKey
-
-    @staticmethod
-    def isValidKey(key, alphabet):
-        if len(key) != len(alphabet):
-            return False
-        
-        mapOfKey = dict()
-        for letter in alphabet:
-            mapOfKey[letter] = 0
-        
-        for letter in key:
-            mapOfKey[letter] = mapOfKey[letter] + 1
-
-        for value in mapOfKey.values():
-            if value != 1:
-                return False
-        
-        return True
+if __name__ == "__main__":
+    myGui = GUI()
+    myGui.qs.printStatistics()
+    myGui.root.mainloop()
