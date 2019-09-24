@@ -116,8 +116,8 @@ def decrypt(alphabet, key, ciphertext):
 def climbHill(fitnessMap, alphabet, n, zeroFrequencyFitness, text):
 
     # overview of algorithm:
-    # 1. calcule fitness of a text decrypted by the parent key
-    # 2. alter the parent key (by swapping letters) and calculate the fitness of a text decrypted by this altered key
+    # 1. calcule fitness of a text decrypted by the a random key (parent/root) key
+    # 2. alter the parent/root key (by swapping letters) and calculate the fitness of a text decrypted by this altered key
     # 3. compare them, the local max key is the higher of the two fitness values
     # 4. repeat above until the local max key has not been beat in 1000 iterations
 
@@ -154,19 +154,20 @@ def climbHillWrapper(args):
     # return climbHill(args[0][0], args[1][0], args[2][0], args[3][0], args[4][0])
     
 
-def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_processes):
-    print(f"CPU threads: {cpu_count()}")
+def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_threads=cpu_count(), num_processes=100, length_limit=120):
+
+    print(f"{num_threads} {num_processes} {length_limit}")
+    # print(f"CPU threads: {cpu_count()}")
     # cuts down the length of the ciphertext to 120
     # 120 characters is enough information to get an accurate answer
-    if(len(text) > 120):
-        text = text[:120]
+    if(len(text) > length_limit):
+        text = text[:length_limit]
 
     tupleArgs = fitnessMap, alphabet, n, zeroFrequencyFitness, text
-
     args = [tupleArgs] * num_processes
 
     # creates multiple processes:
-    p = Pool(8)
+    p = Pool(num_threads)
     results = p.map(climbHillWrapper, args)
     # p.close()
     # p.join()
