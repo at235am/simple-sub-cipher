@@ -154,9 +154,9 @@ def climbHillWrapper(args):
     # return climbHill(args[0][0], args[1][0], args[2][0], args[3][0], args[4][0])
     
 
-def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_threads=cpu_count(), num_processes=100, length_limit=120):
+def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_threads=cpu_count(), num_processes=100, length_limit=140):
 
-    print(f"{num_threads} {num_processes} {length_limit}")
+    print(f"{cpu_count()} {num_threads} {num_processes} {length_limit}")
     # print(f"CPU threads: {cpu_count()}")
     # cuts down the length of the ciphertext to 120
     # 120 characters is enough information to get an accurate answer
