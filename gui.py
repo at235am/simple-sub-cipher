@@ -16,10 +16,12 @@ class GUI():
     ROOT_WINDOW_WIDTH = 600
     ROOT_WINDOW_HEIGHT = 400
     ALPHABET = "abcdefghijklmnopqrstuvwxyz"
-    def __init__(self):
+    def __init__(self, length_limit=140):
         self.qs = QS(DEFAULT_DATA_FILE_PATH)
         self.num_processes = 100
-
+        self.cpu_count = (FS.cpu_count(), FS.cpu_count()/2)[FS.cpu_count() > 8]
+        self.length_limit = length_limit
+        # print(self.cpu_count)
         # self.datafilepathinput = ''
         def listenerfileexplorer():
             currentDirectory =path.dirname(path.abspath(__file__))
@@ -81,7 +83,6 @@ class GUI():
             # test.grid(column=0, row=0)
             self.window = window
 
-
         def listenerHelp():
             textinput.delete("1.0", END)
             res = "HAVENT DONE YET"
@@ -122,7 +123,6 @@ class GUI():
             resultoutput.config(state="disabled")
             keyusedoutput.config(state="readonly")
 
-
         def listenerDecrypt():
             resultoutput.config(state="normal")
             keyusedoutput.config(state="normal")
@@ -139,7 +139,7 @@ class GUI():
             result = ''
             if(inputKey == ''):
                 
-                results = FS.multiprocess_climb_hill(self.qs.QUADGRAM_FITNESS_MAP, GUI.ALPHABET, 4, self.qs.ZERO_FREQUENCY_FITNESS, inputText, num_threads=8)
+                results = FS.multiprocess_climb_hill(self.qs.QUADGRAM_FITNESS_MAP, GUI.ALPHABET, 4, self.qs.ZERO_FREQUENCY_FITNESS, inputText, num_threads=self.cpu_count)
                 absoluteMax = FS.determineAbsoluteMax(results, self.qs.ZERO_FREQUENCY_FITNESS, 4)
                 # since the FS object cuts down the original ciphertext to the first 120 characters
                 # we must decrypt an extra time using the orignal ciphertext:
@@ -189,7 +189,6 @@ class GUI():
         textlabelframe.grid(column=1, row=4, sticky='we')
         resultlabelframe = Frame(root, bg=labelbgcolor)
         resultlabelframe.grid(column=3, row=4, sticky='we')
-
 
         # create the labels and text boxes:
         keyinputlabel = Label(root, text="KEY (leave blank to find/generate one):", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, width=labelbgwidth)
