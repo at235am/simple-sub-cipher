@@ -155,7 +155,7 @@ def climbHillWrapper(args):
     
 
 def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_threads=cpu_count(), num_processes=100, length_limit=140):
-
+    
     print(f"{cpu_count()} {num_threads} {num_processes} {length_limit}")
     # print(f"CPU threads: {cpu_count()}")
     # cuts down the length of the ciphertext to 120
@@ -167,7 +167,7 @@ def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text,
     args = [tupleArgs] * num_processes
 
     # creates multiple processes:
-    p = Pool(num_threads)
+    p = Pool(int(num_threads))
     results = p.map(climbHillWrapper, args)
     # p.close()
     # p.join()
