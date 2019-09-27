@@ -23,65 +23,67 @@ class GUI():
         self.length_limit = length_limit
         # print(self.cpu_count)
         # self.datafilepathinput = ''
-        def listenerfileexplorer():
-            currentDirectory =path.dirname(path.abspath(__file__))
-            file = filedialog.askopenfilename(initialdir=currentDirectory)
+
+        # def listenerfileexplorer():
+        #     currentDirectory =path.dirname(path.abspath(__file__))
+        #     file = filedialog.askopenfilename(initialdir=currentDirectory)
             
-            self.datafilepathinput.delete(0, END)
-            self.datafilepathinput.insert(0, file)
-            self.window.focus_set()
+        #     self.datafilepathinput.delete(0, END)
+        #     self.datafilepathinput.insert(0, file)
+        #     self.window.focus_set()
 
         def listenerSettings():
-            settingbgcolor = "gray"
-            newheight = GUI.ROOT_WINDOW_HEIGHT - 100
-            newwidth = GUI.ROOT_WINDOW_WIDTH - 100
+            print('x')
+            # settingbgcolor = "gray"
+            # newheight = GUI.ROOT_WINDOW_HEIGHT - 100
+            # newwidth = GUI.ROOT_WINDOW_WIDTH - 100
 
-            window = Toplevel(self.root)
-            window.focus_set()
-            window.configure(background=settingbgcolor)
-            window.title("Settings")
-            x_position = int(self.root.winfo_screenwidth()/2 - newwidth/2)
-            y_position = int(self.root.winfo_screenheight()/2 - newheight/2)
-            window.geometry(f'{newwidth}x{newheight}+{x_position}+{y_position}')
+            # window = Toplevel(self.root)
+            # window.focus_set()
+            # window.configure(background=settingbgcolor)
+            # window.title("Settings")
+            # x_position = int(self.root.winfo_screenwidth()/2 - newwidth/2)
+            # y_position = int(self.root.winfo_screenheight()/2 - newheight/2)
+            # window.geometry(f'{newwidth}x{newheight}+{x_position}+{y_position}')
 
-            window.grid_rowconfigure(0, minsize=30)
-            window.grid_columnconfigure(0, minsize=30)
+            # window.grid_rowconfigure(0, minsize=30)
+            # window.grid_columnconfigure(0, minsize=30)
 
-            inputframe = Frame(window, bg=settingbgcolor, width=200, height=300)
-            fileframe = Frame(inputframe, bg=settingbgcolor, width=50)
+            # inputframe = Frame(window, bg=settingbgcolor, width=200, height=300)
+            # fileframe = Frame(inputframe, bg=settingbgcolor, width=50)
 
-            settingslabelwidth = 13
-            cpucountlabel = Label(inputframe, text= "CPU Cores: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
-            numofprocesseslabel = Label(inputframe, text="# of processes: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
-            lenghtlimitlabel = Label(inputframe, text="Length Limit: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
-            alphabetlabel = Label(inputframe, text="Alphabet: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
-            datafilepathlabel = Label(inputframe, text="Data File Path: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
+            # settingslabelwidth = 13
+            # cpucountlabel = Label(inputframe, text= "CPU Cores: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
+            # numofprocesseslabel = Label(inputframe, text="# of processes: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
+            # lenghtlimitlabel = Label(inputframe, text="Length Limit: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
+            # alphabetlabel = Label(inputframe, text="Alphabet: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
+            # datafilepathlabel = Label(inputframe, text="Data File Path: ", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, anchor="e", width = settingslabelwidth)
 
-            cpucountinput = Entry(inputframe,width=4, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
-            numofprocessesinput = Entry(inputframe,width=4, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
-            lengthlimitinput = Entry(inputframe,width=4, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
-            alphabetinput = Entry(inputframe,width=30, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
-            self.datafilepathinput = Entry(fileframe,width=23, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
-            browseforfilebtn = Button(fileframe, text="Browse", command=listenerfileexplorer, width=buttonwidth, height=buttonheight, bg=buttoncolor, relief=FLAT, font=GUI.TEXT_LABEL_FONT, fg=labelfgcolor, overrelief=FLAT, borderwidth=0)
+            # cpucountinput = Entry(inputframe,width=4, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
+            # numofprocessesinput = Entry(inputframe,width=4, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
+            # lengthlimitinput = Entry(inputframe,width=4, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
+            # alphabetinput = Entry(inputframe,width=30, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
+            # self.datafilepathinput = Entry(fileframe,width=23, font=GUI.TEXT_FIELD_INPUT_FONT, relief=FLAT, bg=inputfieldcolor1)
+            # browseforfilebtn = Button(fileframe, text="Browse", command=listenerfileexplorer, width=buttonwidth, height=buttonheight, bg=buttoncolor, relief=FLAT, font=GUI.TEXT_LABEL_FONT, fg=labelfgcolor, overrelief=FLAT, borderwidth=0)
             
 
-            inputframe.grid(column=1, row=1, pady=(5,5))
-            fileframe.grid(column=1, row=4, pady=(0,5), sticky="we")
-            cpucountlabel.grid(column=0,row=0, pady=(0,5), padx=(0,2))
-            cpucountinput.grid(column=1,row=0, pady=(0,5), sticky="w")
-            numofprocesseslabel.grid(column=0,row=1, pady=(0,5), padx=(0,2))
-            numofprocessesinput.grid(column=1,row=1, pady=(0,5), sticky="w")
-            lenghtlimitlabel.grid(column=0,row=2, pady=(0,5), padx=(0,2))
-            lengthlimitinput.grid(column=1,row=2, pady=(0,5), sticky="w")
-            alphabetlabel.grid(column=0,row=3, pady=(0,5), padx=(0,2))
-            alphabetinput.grid(column=1,row=3, pady=(0,5))
-            datafilepathlabel.grid(column=0,row=4, pady=(0,5), padx=(0,2))
-            self.datafilepathinput.grid(column=1,row=0, pady=(0,0), sticky="w")
-            browseforfilebtn.grid(column=2,row=0, pady=(0,0), padx=(2,0), sticky="e")
+            # inputframe.grid(column=1, row=1, pady=(5,5))
+            # fileframe.grid(column=1, row=4, pady=(0,5), sticky="we")
+            # cpucountlabel.grid(column=0,row=0, pady=(0,5), padx=(0,2))
+            # cpucountinput.grid(column=1,row=0, pady=(0,5), sticky="w")
+            # numofprocesseslabel.grid(column=0,row=1, pady=(0,5), padx=(0,2))
+            # numofprocessesinput.grid(column=1,row=1, pady=(0,5), sticky="w")
+            # lenghtlimitlabel.grid(column=0,row=2, pady=(0,5), padx=(0,2))
+            # lengthlimitinput.grid(column=1,row=2, pady=(0,5), sticky="w")
+            # alphabetlabel.grid(column=0,row=3, pady=(0,5), padx=(0,2))
+            # alphabetinput.grid(column=1,row=3, pady=(0,5))
+            # datafilepathlabel.grid(column=0,row=4, pady=(0,5), padx=(0,2))
+            # self.datafilepathinput.grid(column=1,row=0, pady=(0,0), sticky="w")
+            # browseforfilebtn.grid(column=2,row=0, pady=(0,0), padx=(2,0), sticky="e")
 
-            # test = Label(window, text="KEY (leave blank to find/generate one):", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, width=labelbgwidth)
-            # test.grid(column=0, row=0)
-            self.window = window
+            # # test = Label(window, text="KEY (leave blank to find/generate one):", font=GUI.TEXT_LABEL_FONT, bg=labelbgcolor, fg=labelfgcolor, width=labelbgwidth)
+            # # test.grid(column=0, row=0)
+            # self.window = window
 
         def listenerHelp():
             textinput.delete("1.0", END)
