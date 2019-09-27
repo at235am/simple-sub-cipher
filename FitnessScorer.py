@@ -1,4 +1,3 @@
-
 import time
 from math import log10
 from random import randint
@@ -26,10 +25,17 @@ def generateRandomKey(alphabet):
         listOfLettersLeft = listOfLettersLeft.replace(listOfLettersLeft[index], '')
     return randomKey
 
+# checks if the 'key' passed in is a valid key based on the 'alphabet' passed in
+# currently assumes that alphabet is a valid alphabet (will be refactored later)
 def isValidKey(key, alphabet):
+    # if the lengths of the key and alphabet are not equal then key is not valid
     if len(key) != len(alphabet):
         return False
     
+    # the next 3 for loops do this:
+    # checks if key is a valid key by putting each letter in the key and its frequency in a dictionary
+    # if key contains any letter that has a frequency that is not 1
+    # then it is an invalid key
     mapOfKey = dict()
     for letter in alphabet:
         mapOfKey[letter] = 0
@@ -40,6 +46,7 @@ def isValidKey(key, alphabet):
     for value in mapOfKey.values():
         if value != 1:
             return False
+
     return True
 
 # return a list of the quadgrams with a text
@@ -85,7 +92,9 @@ def getWorseCaseFitness(text, zeroFrequencyFitness, n):
     # and making sure that product is negative(since the sum of a bunch of negative numbers is negative)
     return - abs(numOfQuadgrams * zeroFrequencyFitness)
 
-
+# once you have ran climbHill() an x number of times, you will have x 'local maximums'
+# determineAbsoluteMax, iterates through all the those results 
+# to find the result key/text with the highest fitness
 def determineAbsoluteMax(results, zeroFrequencyFitness, n):
     absoluteMax = '', getWorseCaseFitness(results[0][2], zeroFrequencyFitness, n), ''
     for i in range(len(results)):
@@ -149,15 +158,15 @@ def climbHill(fitnessMap, alphabet, n, zeroFrequencyFitness, text):
 
     return localMaxKey, lmkFitness, lmkPlaintext
 
+# helps use multiprocessing while keeping the code clean
 def climbHillWrapper(args):
     return climbHill(*args)
     # return climbHill(args[0][0], args[1][0], args[2][0], args[3][0], args[4][0])
     
-
+# 
 def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_threads=cpu_count(), num_processes=100, length_limit=140):
-    
-    print(f"{cpu_count()} {num_threads} {num_processes} {length_limit}")
-    # print(f"CPU threads: {cpu_count()}")
+    num_threads = int(num_threads) # ensures that num_threads is an int
+    print(f"[threads: {cpu_count()}] [workers: {num_threads}] [processes: {num_processes}] [length: {length_limit}]")
     # cuts down the length of the ciphertext to 120
     # 120 characters is enough information to get an accurate answer
     if(len(text) > length_limit):
@@ -167,7 +176,7 @@ def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text,
     args = [tupleArgs] * num_processes
 
     # creates multiple processes:
-    p = Pool(int(num_threads))
+    p = Pool(num_threads)
     results = p.map(climbHillWrapper, args)
     # p.close()
     # p.join()
