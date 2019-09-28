@@ -1,9 +1,33 @@
+############################################################################################
+# PLEASE READ THE 'README.txt' for instructions on how to RUN this program
+############################################################################################
+# Author: Sam Alhaqab
+# FitnessScorer is a utility module.
+# I made all the functions require lots of arguments to account for the different ways
+# someone might want to use this module.
+
+# FitnessScorer's main implementation is a hill climb algorithm:
+# It has a function that climbs a hill to find a local maximum: climbHill()
+# It has a function that uses multiprocessing to find multiple local maximums: multiprocess_climb_hill()
+# It has a function that finds the 'absolute' maximum of the above results: determineAbsoluteMax()
+
+# All other functions are helper functions or functions other programmers might find useful.
+
+# FitnessScorer relies HEAVILY on a fitnes map, which is a dictionary data structure
+# where the key is an ngram and the value is the fitness of that quadgram 
+# 
+# To use this module to its full capability, you will need to generate such a dictionary
+# I have made a QuadramStatistics module to do this but did not want to couple that 
+# class with this one. Therefore, a fitness map (dictionary) was used.
+############################################################################################
+
 import time
 from math import log10
 from random import randint
 from multiprocessing import Pool
 from multiprocessing import cpu_count
 
+# takes in 'text' and returns back only the lower alphabet only
 def lowerAlphaOnly(text):
     alphaOnlyText = ''
     for i in range(len(text)):
@@ -163,7 +187,9 @@ def climbHillWrapper(args):
     return climbHill(*args)
     # return climbHill(args[0][0], args[1][0], args[2][0], args[3][0], args[4][0])
     
-# 
+# uses multiprocessing to climb multiple local hills at the same time
+# this improves deryption times as it doesnt iterate through each call of climbHill()
+# it runs thme in parallel
 def multiprocess_climb_hill(fitnessMap, alphabet, n, zeroFrequencyFitness, text, num_threads=cpu_count(), num_processes=100, length_limit=140):
     num_threads = int(num_threads) # ensures that num_threads is an int
     print(f"[threads: {cpu_count()}] [workers: {num_threads}] [processes: {num_processes}] [length: {length_limit}]")

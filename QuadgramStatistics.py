@@ -1,8 +1,10 @@
-#################################################################################################################################
+############################################################################################
+# PLEASE READ THE 'README.txt' for instructions on how to RUN this program
+############################################################################################
 # Author: Sam Alhaqab
 # This program uses the hill climbing algorithm in conjunction with quadgram statistics to decrypt any simple substitution cipher
 # Please note that given the same piece of text the hill climbing algorithm may and usually returns different results
-#################################################################################################################################
+############################################################################################
 
 from math import log10
 from random import randint
