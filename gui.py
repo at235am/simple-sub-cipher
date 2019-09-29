@@ -114,42 +114,40 @@ class GUI():
             window.grid_columnconfigure(0, minsize=30)
 
             # creates the label and text box widgets:
-            introlabel    = Label(window, **labelbiggerStyleArgs, text="Introduction")
-            section1label = Label(window, **labelbiggerStyleArgs, text="I. Quadgram Statistics as a fitness measure")
-            section2label = Label(window, **labelbiggerStyleArgs, text="II. Hill Climbing Algorithm")
-            introtextbox      = Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=2)
-            section1p1textbox = Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=10)
-            section1p2textbox = Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=7)
-            formula1textbox   = Text(window, **formulatextboxStyleArgs,     width=textboxwidth, height=1)
-            formula2textbox   = Text(window, **formulatextboxStyleArgs,     width=textboxwidth, height=1)
-            section2textbox   = Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=17)
+            introlabel        = Label(window, **labelbiggerStyleArgs,        text="Introduction")
+            section1label     = Label(window, **labelbiggerStyleArgs,        text="I. Quadgram Statistics as a fitness measure")
+            section2label     = Label(window, **labelbiggerStyleArgs,        text="II. Hill Climbing Algorithm")            
+            formula1text      = Label(window, **formulatextboxStyleArgs,     width=textboxwidth, height=1, fg=maincolor)
+            formula2text      = Label(window, **formulatextboxStyleArgs,     width=textboxwidth, height=1, fg=maincolor)
+            introtextbox      =  Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=2)
+            section1p1textbox =  Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=10)
+            section1p2textbox =  Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=7)
+            section2textbox   =  Text(window, **programinfotextboxStyleArgs, width=textboxwidth, height=17)
 
             # sets the content for the text boxes:
             introtextbox.insert(INSERT, INTRO_TEXT)
+            formula1text.config(text=FORMULA_1)
+            formula2text.config(text=FORMULA_2)
             section1p1textbox.insert(INSERT, SECTION_1_CONTENT_PART_1)
             section1p2textbox.insert(INSERT, SECTION_1_CONTENT_PART_2)
-            formula1textbox.insert(INSERT, FORMULA_1)
-            formula2textbox.insert(INSERT, FORMULA_2)
             section2textbox.insert(INSERT, SECTION_2_CONTENT)
 
             # disables all the text boxes so that the user cannot change the contents:
             introtextbox.configure(state=DISABLED)
             section1p1textbox.configure(state=DISABLED)
             section1p2textbox.configure(state=DISABLED)
-            formula1textbox.configure(state=DISABLED)
-            formula2textbox.configure(state=DISABLED)
             section2textbox.configure(state=DISABLED)
 
             # lays out the all widgets:
-            introlabel.       grid(column=1, row=1, pady=5, sticky="we")
-            introtextbox.     grid(column=1, row=2, pady=5, sticky="we")
-            section1label.    grid(column=1, row=3, pady=5, sticky="we")
-            section1p1textbox.grid(column=1, row=4, pady=5, sticky="we")
-            formula1textbox.  grid(column=1, row=5, pady=5)
-            section1p2textbox.grid(column=1, row=6, pady=5, sticky="we")
-            formula2textbox.  grid(column=1, row=7, pady=5)
-            section2label.    grid(column=1, row=8, pady=5, sticky="we")
-            section2textbox.  grid(column=1, row=9, pady=5, sticky="we")
+            introlabel.       grid(column=1, row=1, pady=5,     sticky="we")
+            introtextbox.     grid(column=1, row=2, pady=5,     sticky="we")
+            section1label.    grid(column=1, row=3, pady=5,     sticky="we")
+            section1p1textbox.grid(column=1, row=4, pady=(5,0), sticky="we")
+            formula1text.     grid(column=1, row=5, pady=0,     sticky="we")
+            section1p2textbox.grid(column=1, row=6, pady=0,     sticky="we")
+            formula2text.     grid(column=1, row=7, pady=(0,5), sticky="we")
+            section2label.    grid(column=1, row=8, pady=5,     sticky="we")
+            section2textbox.  grid(column=1, row=9, pady=5,     sticky="we")
             
         def listenerTexts():
             def setInputText(event):
@@ -337,7 +335,7 @@ class GUI():
         labelStyleArgs              = {'font':GUI.TEXT_LABEL_FONT,        'bg':maincolor, 'fg':maintextcolor}
         labelbiggerStyleArgs        = {'font':GUI.TEXT_LABEL_FONT_BIGGER, 'bg':maincolor, 'fg':maintextcolor}
         programinfotextboxStyleArgs = {'font':GUI.TEXT_FIELD_INPUT_FONT,  'bg':inputfieldcolor1, 'relief':FLAT, 'wrap':WORD}
-        formulatextboxStyleArgs     = {'font':GUI.TEXT_LABEL_FONT,        'bg':inputfieldcolor1, 'relief':FLAT}
+        formulatextboxStyleArgs     = {'font':GUI.TEXT_LABEL_FONT_BIGGER,        'bg':inputfieldcolor1, 'relief':FLAT}
         inputFieldActiveStyleArgs   = {'font':GUI.TEXT_FIELD_INPUT_FONT,  'bg':inputfieldcolor1, 'relief':FLAT}
         inputFieldDisabledStyleArgs = {'font':GUI.TEXT_FIELD_INPUT_FONT,  'bg':inputfieldcolor2, 'relief':FLAT}
 
